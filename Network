@@ -1,0 +1,5 @@
+```SSH Port Forwarding
+（ローカルポートフォワード）
+ssh -N -L <local port>:<転送先IP>:<転送先port> -i <中継につなぐための秘密鍵のパス> <中継のユーザ>@<中継IP>
+（ローカルポートフォワード×２）
+ssh -N -L <local port>:<転送先IP>:<転送先port> -L <local port2>:<転送先IP>:<転送先port2> -i <中継につなぐための秘密鍵のパス> <中継のユーザ>@<中継IP>
