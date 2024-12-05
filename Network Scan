@@ -8,3 +8,6 @@ gobuster dir -u <URL or IP> -w /usr/share/seclists/Discovery/Web-Content/common.
 ssh-keyscan -t rsa <URL or IP> -p 22
 getaddrinfo -p
 nmap -p22 <URL or IP> --script ssh-hostkey --script-args ssh_hostkey=full
+
+```ping sweep
+for i in {1..254};do (ping -c 1 10.100.11.$i | grep "bytes from" &);done
