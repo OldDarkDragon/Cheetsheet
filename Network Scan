@@ -1,0 +1,10 @@
+```URL Directory Scan
+gobuster dir -u <URL or IP> -w /usr/share/seclists/Discovery/Web-Content/common.txt -s '200,204,301,302,307,403,500' -b '' -e
+
+```Nmap
+脆弱性スキャン：--script vuln
+
+```SSH関係のスキャン
+ssh-keyscan -t rsa <URL or IP> -p 22
+getaddrinfo -p
+nmap -p22 <URL or IP> --script ssh-hostkey --script-args ssh_hostkey=full
