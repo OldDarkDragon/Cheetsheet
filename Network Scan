@@ -11,3 +11,14 @@ nmap -p22 <URL or IP> --script ssh-hostkey --script-args ssh_hostkey=full
 
 ```ping sweep
 for i in {1..254};do (ping -c 1 10.100.11.$i | grep "bytes from" &);done
+
+```smb関係のスキャン
+enum4linux -a <IP>
+rpcclient -U "" -N <IP>
+  rpcclient $> srvinfo
+  rpcclient $> querydispinfo
+  rpcclient $> lookupnames <account name>
+  rpcclient $> netshareenumall
+  rpcclient $> queryuser <account name>
+  rpcclient $> enumprivs
+crackmapexec smb <IP>
