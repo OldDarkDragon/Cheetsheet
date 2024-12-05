@@ -1,2 +1,16 @@
-cat /etc/os-release
+#OS情報
+cat /etc/os-release 2>/dev/null
 uname -a
+
+#Path
+echo $PATH
+
+#環境変数
+(env || set) 2>/dev/null
+
+#Cron jobs
+crontab -l
+ls -la /etc/cron* /etc/at*
+cat /etc/cron* /etc/at* /etc/anacrontab /var/spool/cron/crontabs/root 2>/dev/null | grep -v "^#"
+
+#Cron path
