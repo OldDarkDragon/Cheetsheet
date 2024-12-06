@@ -1,18 +1,18 @@
-```URL Directory Scan
+#URL Directory Scan
 gobuster dir -u <URL or IP> -w /usr/share/seclists/Discovery/Web-Content/common.txt -s '200,204,301,302,307,403,500' -b '' -e
 
-```Nmap
+#Nmap
 脆弱性スキャン：--script vuln
 
-```SSH関係のスキャン
+#SSH関係のスキャン
 ssh-keyscan -t rsa <URL or IP> -p 22
 getaddrinfo -p
 nmap -p22 <URL or IP> --script ssh-hostkey --script-args ssh_hostkey=full
 
-```ping sweep
+#ping sweep
 for i in {1..254};do (ping -c 1 10.100.11.$i | grep "bytes from" &);done
 
-```smb関係のスキャン
+#smb関係のスキャン
 enum4linux -a <IP>
 rpcclient -U "" -N <IP>
   rpcclient $> srvinfo
