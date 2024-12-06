@@ -3,3 +3,6 @@ find / -perm -4000 2>/dev/null
 
 #sudo
 sudo -l
+
+#引っかかるGroupがある場合
+find / -group <group> 2>/dev/null
