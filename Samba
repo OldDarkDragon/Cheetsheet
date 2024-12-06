@@ -1,0 +1,14 @@
+#smbclient
+//パスワードなしでアクセス可能なフォルダ一覧を表示
+smbclient --no-pass -L //<IP>
+
+//フォルダへアクセス
+smbclient --no-pass //<IP>/<share>
+
+//Download all
+smbclient //<IP>/<share>
+> mask ""
+> recurse
+> prompt
+> mget *
+#Download everything to current directory
