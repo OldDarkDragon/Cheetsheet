@@ -1,5 +1,8 @@
 #OS情報
-cat /etc/os-release 2>/dev/null
+ls /etc | egrep -e "fedora*|debian*|gentoo*|mandriva*|mandrake*|meego*|redhat*|lsb-*|sun-*|SUSE*|release"
+ -> os-releaseが存在する場合
+  cat /etc/os-release 2>/dev/null
+
 uname -a
 
 #Path
