@@ -1,9 +1,11 @@
-#OS情報
+#OSバージョン情報
 ls /etc | egrep -e "fedora*|debian*|gentoo*|mandriva*|mandrake*|meego*|redhat*|lsb-*|sun-*|SUSE*|release"
  -> os-releaseが存在する場合
   cat /etc/os-release 2>/dev/null
 
+#カーネルバージョン情報
 uname -a
+cat /proc/version
 
 #Path
 echo $PATH
