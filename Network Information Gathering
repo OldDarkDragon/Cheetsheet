@@ -1,3 +1,11 @@
+#ping sweep
+for i in {1..254};do (ping -c 1 10.100.11.$i | grep "bytes from" &);done
+
+#Netcat(port scan)
+ udp-> nc -uz <IP> <port>
+ tcp-> n -z <IP> <port>
+ ex) nc -zv <IP> <port>-<port> :スキャンするポートの範囲を指定、-vで詳細情報を出力
+
 #URL Directory Scan
 gobuster dir -u <URL or IP> -w /usr/share/seclists/Discovery/Web-Content/common.txt -s '200,204,301,302,307,403,500' -b '' -e
 
@@ -8,9 +16,6 @@ gobuster dir -u <URL or IP> -w /usr/share/seclists/Discovery/Web-Content/common.
 ssh-keyscan -t rsa <URL or IP> -p 22
 getaddrinfo -p
 nmap -p22 <URL or IP> --script ssh-hostkey --script-args ssh_hostkey=full
-
-#ping sweep
-for i in {1..254};do (ping -c 1 10.100.11.$i | grep "bytes from" &);done
 
 #ARP table
 arp -A
