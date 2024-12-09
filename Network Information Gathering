@@ -34,6 +34,19 @@ crackmapexec smb <IP>
 #Hydra
 hydra -l <User> -P <wordlist> ssh://<targetIP> #sshの総当たり
 hydra -l <User> -P <wordlist> ftp://<targetIP> #ftpの総当たり
+
+POSTメソッドを利用したログインブルートフォースの場合：
+hydra training -l <ユーザ名> -P <パスワードリスト> http-form-post "<標的上のログインページへのパス>:<リクエスト送信時のPOSTメソッドのbodyに含まれる値>:<ログイン失敗時のError文の文字列>"
+
+【hydraのオプションについて】
+-l:特定のユーザ名のみを指定
+-L:ユーザ名のリストを指定(全ての文字列でのログインを試す。)
+-p:特定のパスワードのみを指定
+-P:パスワードリストを指定(全ての文字列でのログインを試す。)
+
+【hydraコマンドの例(WordPressのログイン画面の場合)】
+hydra training -l ユーザ名-P /home/student/rockyou_mini.txt http-form-post "/wordpress/wplogin.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:incorrect."
+
 hydra <IP> -s <port> -l <user> -P <wordlist> http-get-form "<Request Path>:username=^USER^&password=^PASS^&Login=Login:H=<Request Header>:F=<Failed message>"
 
 hydra #hydraコマンド
